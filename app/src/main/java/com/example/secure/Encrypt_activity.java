@@ -2,6 +2,7 @@ package com.example.secure;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,12 +13,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.security.Key;
-import java.util.Base64;
 
 public class Encrypt_activity extends Activity {
     ImageButton addFileBtn;
@@ -26,11 +25,16 @@ public class Encrypt_activity extends Activity {
     Intent addFileIntent;
     String fileName;
     Uri fileUri;
+    SharedPreferences sharedPreferences;
+    private static final String Shared_pref_name = "secureDesApp";
+    private static final String Key_key = "secureDesKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encrypt);
+        sharedPreferences = getSharedPreferences(Shared_pref_name, MODE_PRIVATE);
+        String password = sharedPreferences.getString(Key_key, null);
         this.addFileBtn = findViewById(R.id.addFileBtn);
         this.pathTextView = findViewById(R.id.pathTextView);
         this.encButton = findViewById(R.id.encFileButton);
@@ -42,7 +46,7 @@ public class Encrypt_activity extends Activity {
         this.encButton.setOnClickListener((View v) -> {
 
             try {
-                Key_Generator kgn =new Key_Generator("Khush");
+                Key_Generator kgn =new Key_Generator(password);
                 Key key;
                 key = kgn.generateKey();
                 InputStream inputStream = v.getContext().getContentResolver().openInputStream(this.fileUri);

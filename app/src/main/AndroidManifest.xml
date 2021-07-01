@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.secure">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Secure">
-        <activity android:name=".Decrypt_activity"></activity>
+        <activity android:name=".SignIn_Activity"></activity>
+        <activity android:name=".Login_activity" />
+        <activity android:name=".Decrypt_activity" />
         <activity android:name=".Encrypt_activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
