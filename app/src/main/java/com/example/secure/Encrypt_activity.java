@@ -44,6 +44,7 @@ public class Encrypt_activity extends Activity {
             startActivityForResult(addFileIntent, 10);
         });
         this.encButton.setOnClickListener((View v) -> {
+            //Toast.makeText(v.getContext(), this.fileUri.toString(), Toast.LENGTH_LONG).show();
 
             try {
                 Key_Generator kgn =new Key_Generator(password);
@@ -66,6 +67,13 @@ public class Encrypt_activity extends Activity {
                     FileOutputStream fos = new FileOutputStream(file);
                     fos.write(encrypted);
                     fos.close();
+                    File normalFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
+                            File.separator + "Download" + File.separator + this.fileName);
+                    Toast.makeText(v.getContext(), normalFile.getPath(), Toast.LENGTH_LONG).show();
+                    if(normalFile.exists()){
+                        Toast.makeText(v.getContext(), "Original File Deleted", Toast.LENGTH_LONG).show();
+                        normalFile.delete();
+                    }
                 }
             }catch (Exception e){
                 e.printStackTrace();

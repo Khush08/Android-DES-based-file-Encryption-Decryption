@@ -16,6 +16,9 @@ import androidx.core.content.ContextCompat;
 import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
+
+    Button encBtn;
+    Button decBtn;
     Intent encIntent;
     Intent signinIntent;
     Intent loginIntent;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +51,12 @@ public class MainActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
+
         setContentView(R.layout.activity_main);
-        Button encBtn = findViewById(R.id.encBtn);
-        Button decBtn = findViewById(R.id.decBtn);
+        encBtn = findViewById(R.id.encBtn);
+        decBtn = findViewById(R.id.decBtn);
+
+
         encBtn.setOnClickListener((View v)-> {
             sharedPreferences = getSharedPreferences(Shared_pref_name, MODE_PRIVATE);
             String key = sharedPreferences.getString(Key_key, null);
@@ -62,15 +69,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
         decBtn.setOnClickListener((View v)->{
-            signinIntent= new Intent(MainActivity.this, SignIn_Activity.class);
-            startActivity(signinIntent);
+            sharedPreferences = getSharedPreferences(Shared_pref_name, MODE_PRIVATE);
+            String key = sharedPreferences.getString(Key_key, null);
+            if(key!=null){
+                signinIntent = new Intent(MainActivity.this, SignIn_Activity.class);
+                startActivity(signinIntent);
+            }else {
+                loginIntent = new Intent(MainActivity.this, Login_activity.class);
+                startActivity(loginIntent);
+            }
         });
-
-
-
-
-
 
     }
 }
